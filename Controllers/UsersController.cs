@@ -64,4 +64,27 @@ public class UsersController : ControllerBase
 
     return Ok(dto);
   }
+
+  [HttpPost]
+  public IActionResult CreateUser([FromBody] CreateUserRequestDto requestDto)
+  {
+    var input = new CreateUserInput
+    (
+      username: requestDto.Username,
+      age: requestDto.Age,
+      password: requestDto.Password
+    );
+
+    var model = _userService.CreateUser(input);
+
+    var responseDto = new GetUserResponseDto
+    (
+      id: model.Id,
+      username: model.Username,
+      age: model.Age
+    );
+
+    return Ok(responseDto);
+  }
+
 }

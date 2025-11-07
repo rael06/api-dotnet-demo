@@ -32,4 +32,10 @@ public class UserService : IUserService
     var user = _userRepository.GetUserById(userId);
     return user;
   }
+
+  public User CreateUser(CreateUserInput input)
+  {
+    var user = _userRepository.CreateUser(input);
+    return user;
+  }
 }
