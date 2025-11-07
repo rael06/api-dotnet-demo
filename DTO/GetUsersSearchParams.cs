@@ -1,6 +1,6 @@
 namespace MyWebAPI.DTO;
 
-public class GetUsersSearchParams
+public class GetUsersSearchParamsDto
 {
   public int? MinAge { get; set; }
   public int? MaxAge { get; set; }

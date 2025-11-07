@@ -17,7 +17,7 @@ public class UsersController : ControllerBase
   }
 
   [HttpGet]
-  public IActionResult GetUsers([FromQuery] GetUsersSearchParams? searchParams)
+  public IActionResult GetUsers([FromQuery] GetUsersSearchParamsDto? searchParams)
   {
     var input = new GetUsersInput
     {
