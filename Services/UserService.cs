@@ -9,15 +9,15 @@ public class UserService : IUserService
     _userRepository = userRepository;
   }
 
-  public ICollection<User> GetAllUsers()
+  public ICollection<User> GetUsers(GetUsersInput input)
   {
-    var users = _userRepository.GetAllUsers();
+    var users = _userRepository.GetUsers(input);
     return users.ToList();
   }
 
   public double GetAverageAge()
   {
-    var users = _userRepository.GetAllUsers().ToList();
+    var users = _userRepository.GetUsers(new GetUsersInput()).ToList();
     if (users.Count == 0)
     {
       return 0;
@@ -25,5 +25,11 @@ public class UserService : IUserService
 
     var averageAge = users.Average(u => u.Age);
     return averageAge;
+  }
+
+  public User? GetUserById(int userId)
+  {
+    var user = _userRepository.GetUserById(userId);
+    return user;
   }
 }

@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using MyWebAPI.DTO;
+using MyWebAPI.Models;
 using MyWebAPI.Services;
 
 namespace MyWebAPI.Controllers;
@@ -15,10 +17,24 @@ public class UsersController : ControllerBase
   }
 
   [HttpGet]
-  public IActionResult GetUsers()
+  public IActionResult GetUsers([FromQuery] GetUsersSearchParams? searchParams)
   {
-    var users = _userService.GetAllUsers();
-    return Ok(users);
+    var input = new GetUsersInput
+    {
+      MinAge = searchParams?.MinAge,
+      MaxAge = searchParams?.MaxAge
+    };
+
+    var models = _userService.GetUsers(input);
+
+    var dto = models.Select(u => new GetUserResponseDto
+    (
+      id: u.Id,
+      username: u.Username,
+      age: u.Age
+    ));
+
+    return Ok(dto);
   }
 
   [HttpGet("age-average")]
@@ -27,5 +43,25 @@ public class UsersController : ControllerBase
     var averageAge = _userService.GetAverageAge();
 
     return Ok(averageAge);
+  }
+
+  [HttpGet("{userId}")]
+  public IActionResult GetUserById(int userId)
+  {
+    var model = _userService.GetUserById(userId);
+
+    if (model == null)
+    {
+      return NotFound();
+    }
+
+    var dto = new GetUserResponseDto
+    (
+      id: model.Id,
+      username: model.Username,
+      age: model.Age
+    );
+
+    return Ok(dto);
   }
 }
