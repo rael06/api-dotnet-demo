@@ -5,16 +5,16 @@ namespace MyWebAPI.Infrastructure.Database.Repositories;
 
 public class UserRepository : IUserRepository
 {
-  private static List<User> users =
-  [
-    new User(1, "Alice", 30, "hash1"),
-    new User(2, "Bob", 25, "hash2"),
-    new User(3, "Charlie", 35, "hash3")
-  ];
+  private readonly AppDbContext _context;
+
+  public UserRepository(AppDbContext context)
+  {
+    _context = context;
+  }
 
   public IEnumerable<User> GetUsers(GetUsersInput input)
   {
-    return users.Where(u =>
+    return _context.Users.Where(u =>
       (input.MinAge == null || u.Age >= input.MinAge) &&
       (input.MaxAge == null || u.Age <= input.MaxAge)
     );
@@ -22,33 +22,40 @@ public class UserRepository : IUserRepository
 
   public User? GetUserById(int userId)
   {
-    return users.FirstOrDefault(u => u.Id == userId);
+    return _context.Users.FirstOrDefault(u => u.Id == userId);
   }
 
   public User CreateUser(CreateUserInput input)
   {
-    int newId = users.Max(u => u.Id) + 1;
     var passwordHash = input.Password + "_hashed";
 
-    var newUser = new User(newId, input.Username, input.Age, passwordHash);
-    users.Add(newUser);
+    var newUser = new User(input.Username, input.Age, passwordHash);
+    _context.Users.Add(newUser);
+    _context.SaveChanges();
+
     return newUser;
   }
 
   public void DeleteUser(int userId)
   {
-    var user = users.FirstOrDefault(u => u.Id == userId);
+    var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+
     if (user == null) return;
-    users.Remove(user);
+
+    _context.Users.Remove(user);
+    _context.SaveChanges();
   }
 
   public User? UpdateUser(UpdateUserInput input)
   {
-    var user = users.FirstOrDefault(u => u.Id == input.Id);
+    var user = GetUserById(input.Id);
+
     if (user == null) return null;
 
     user.Username = input.Username;
     user.Age = input.Age;
+
+    _context.SaveChanges();
 
     return user;
   }

@@ -7,9 +7,8 @@ public class User
   public int Age { get; set; }
   public string PasswordHash { get; set; }
 
-  public User(int id, string username, int age, string passwordHash)
+  public User(string username, int age, string passwordHash)
   {
-    Id = id;
     Username = username;
     Age = age;
     PasswordHash = passwordHash;
