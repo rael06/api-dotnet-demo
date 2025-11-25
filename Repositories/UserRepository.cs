@@ -42,7 +42,7 @@ public class UserRepository : IUserRepository
     users.Remove(user);
   }
 
-  public User? PutUser(PutUserInput input)
+  public User? UpdateUser(UpdateUserInput input)
   {
     var user = users.FirstOrDefault(u => u.Id == input.Id);
     if (user == null) return null;

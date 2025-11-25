@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyWebAPI.DTO;
 
-public class PutUserRequestDto
+public class UpdateUserRequestDto
 {
   [Required]
   public required int Id { get; set; }

@@ -2,18 +2,18 @@ using MyWebAPI.Models;
 
 namespace MyWebAPI.Services.UserService;
 
-public enum PutUserStatus
+public enum UpdateUserStatus
 {
   Success,
   NotFound
 }
 
-public class PutUserOutput
+public class UpdateUserOutput
 {
-  public PutUserStatus Status { get; set; }
+  public UpdateUserStatus Status { get; set; }
   public User? UpdatedUser { get; set; }
 
-  public PutUserOutput(PutUserStatus status, User? updatedUser)
+  public UpdateUserOutput(UpdateUserStatus status, User? updatedUser)
   {
     Status = status;
     UpdatedUser = updatedUser;

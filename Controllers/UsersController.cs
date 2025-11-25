@@ -99,24 +99,24 @@ public class UsersController : ControllerBase
   }
 
   [HttpPut("{userId}")]
-  public IActionResult UpdateUser(int userId, [FromBody] PutUserRequestDto requestDto)
+  public IActionResult UpdateUser(int userId, [FromBody] UpdateUserRequestDto requestDto)
   {
     if (requestDto.Id != userId)
     {
       return BadRequest($"Id: {requestDto.Id} in the request body does not match the id: {userId} in the URL");
     }
 
-    var input = new PutUserInput(
+    var input = new UpdateUserInput(
       id: requestDto.Id,
       username: requestDto.Username,
       age: requestDto.Age
     );
 
-    var output = _userService.PutUser(input);
+    var output = _userService.UpdateUser(input);
 
     Func<IActionResult> action = output.Status switch
     {
-      PutUserStatus.Success => () =>
+      UpdateUserStatus.Success => () =>
       {
         if (output.UpdatedUser == null)
         {
@@ -130,7 +130,7 @@ public class UsersController : ControllerBase
         return Ok(dto);
       }
       ,
-      PutUserStatus.NotFound => () => NotFound($"User with id {userId} not found"),
+      UpdateUserStatus.NotFound => () => NotFound($"User with id {userId} not found"),
     };
 
     return action();

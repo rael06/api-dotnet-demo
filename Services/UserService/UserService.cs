@@ -50,14 +50,14 @@ public class UserService : IUserService
     return new DeleteUserOutput { Status = DeleteUserStatus.Success };
   }
 
-  public PutUserOutput PutUser(PutUserInput input)
+  public UpdateUserOutput UpdateUser(UpdateUserInput input)
   {
-    var updatedUser = _userRepository.PutUser(input);
+    var updatedUser = _userRepository.UpdateUser(input);
     if (updatedUser == null)
     {
-      return new PutUserOutput(status: PutUserStatus.NotFound, updatedUser: null);
+      return new UpdateUserOutput(status: UpdateUserStatus.NotFound, updatedUser: null);
     }
 
-    return new PutUserOutput(status: PutUserStatus.Success, updatedUser: updatedUser);
+    return new UpdateUserOutput(status: UpdateUserStatus.Success, updatedUser: updatedUser);
   }
 }
