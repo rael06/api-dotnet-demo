@@ -84,7 +84,6 @@ public class UsersController : ControllerBase
       age: model.Age
     );
 
-    return Ok(responseDto);
+    return CreatedAtAction(nameof(GetUserById), new { userId = model.Id }, responseDto);
   }
-
 }
