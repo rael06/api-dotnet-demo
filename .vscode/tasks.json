@@ -9,7 +9,7 @@
         "build",
         "${workspaceFolder}/MyWebAPI.csproj",
         "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary;ForceNoAlign"
+        "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile"
     },
@@ -21,7 +21,7 @@
         "publish",
         "${workspaceFolder}/MyWebAPI.csproj",
         "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary;ForceNoAlign"
+        "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile"
     },
@@ -34,6 +34,25 @@
         "run",
         "--project",
         "${workspaceFolder}/MyWebAPI.csproj"
+      ],
+      "problemMatcher": "$msCompile",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": false
+      }
+    },
+    {
+      "label": "clean",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "clean",
+        "${workspaceFolder}/Digicybersec.Api/Digicybersec.Api.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile"
     }
