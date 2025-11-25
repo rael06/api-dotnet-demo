@@ -1,7 +1,7 @@
 using MyWebAPI.Models;
 using MyWebAPI.Services.UserService;
 
-namespace MyWebAPI.Repositories;
+namespace MyWebAPI.Infrastructure.Database.Repositories;
 
 public class UserRepository : IUserRepository
 {

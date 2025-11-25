@@ -39,3 +39,6 @@ msbuild.wrn
 
 # Private files
 *.private.*
+
+# Database
+*.db
