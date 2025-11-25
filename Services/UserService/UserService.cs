@@ -9,16 +9,16 @@ public class UserService : IUserService
     _userRepository = userRepository;
   }
 
-  public ICollection<User> GetUsers(GetUsersInput input)
+  public async Task<IEnumerable<User>> GetUsers(GetUsersInput input)
   {
-    var users = _userRepository.GetUsers(input);
-    return users.ToList();
+    var users = await _userRepository.GetUsers(input);
+    return users;
   }
 
-  public double GetAverageAge()
+  public async Task<double> GetAverageAge()
   {
-    var users = _userRepository.GetUsers(new GetUsersInput()).ToList();
-    if (users.Count == 0)
+    var users = await _userRepository.GetUsers(new GetUsersInput());
+    if (!users.Any())
     {
       return 0;
     }
@@ -27,32 +27,33 @@ public class UserService : IUserService
     return averageAge;
   }
 
-  public User? GetUserById(int userId)
+  public async Task<User?> GetUserById(int userId)
   {
-    var user = _userRepository.GetUserById(userId);
+    var user = await _userRepository.GetUserById(userId);
     return user;
   }
 
-  public User CreateUser(CreateUserInput input)
+  public async Task<User> CreateUser(CreateUserInput input)
   {
-    var user = _userRepository.CreateUser(input);
+    var user = await _userRepository.CreateUser(input);
     return user;
   }
 
-  public DeleteUserOutput DeleteUser(int userId)
+  public async Task<DeleteUserOutput> DeleteUser(int userId)
   {
-    var user = _userRepository.GetUserById(userId);
+    var user = await _userRepository.GetUserById(userId);
     if (user == null)
     {
       return new DeleteUserOutput { Status = DeleteUserStatus.NotFound };
     }
-    _userRepository.DeleteUser(userId);
+
+    await _userRepository.DeleteUser(userId);
     return new DeleteUserOutput { Status = DeleteUserStatus.Success };
   }
 
-  public User? UpdateUser(UpdateUserInput input)
+  public async Task<User?> UpdateUser(UpdateUserInput input)
   {
-    var updatedUser = _userRepository.UpdateUser(input);
+    var updatedUser = await _userRepository.UpdateUser(input);
     if (updatedUser == null)
     {
       return null;

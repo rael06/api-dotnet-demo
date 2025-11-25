@@ -4,9 +4,9 @@ namespace MyWebAPI.Services.UserService;
 
 public interface IUserRepository
 {
-  IEnumerable<User> GetUsers(GetUsersInput input);
-  User? GetUserById(int userId);
-  User CreateUser(CreateUserInput input);
-  void DeleteUser(int userId);
-  User? UpdateUser(UpdateUserInput input);
+  Task<IEnumerable<User>> GetUsers(GetUsersInput input);
+  Task<User?> GetUserById(int userId);
+  Task<User> CreateUser(CreateUserInput input);
+  Task DeleteUser(int userId);
+  Task<User?> UpdateUser(UpdateUserInput input);
 }

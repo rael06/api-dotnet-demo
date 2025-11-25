@@ -16,7 +16,7 @@ public class UsersController : ControllerBase
   }
 
   [HttpGet]
-  public IActionResult GetUsers([FromQuery] GetUsersSearchParamsDto? searchParams)
+  public async Task<IActionResult> GetUsers([FromQuery] GetUsersSearchParamsDto? searchParams)
   {
     var input = new GetUsersInput
     {
@@ -24,7 +24,7 @@ public class UsersController : ControllerBase
       MaxAge = searchParams?.MaxAge
     };
 
-    var models = _userService.GetUsers(input);
+    var models = await _userService.GetUsers(input);
 
     var dto = models.Select(u => new GetUserResponseDto
     (
@@ -37,17 +37,17 @@ public class UsersController : ControllerBase
   }
 
   [HttpGet("age-average")]
-  public IActionResult GetAgeAverage()
+  public async Task<IActionResult> GetAgeAverage()
   {
-    var averageAge = _userService.GetAverageAge();
+    var averageAge = await _userService.GetAverageAge();
 
     return Ok(averageAge);
   }
 
   [HttpGet("{userId}")]
-  public IActionResult GetUserById(int userId)
+  public async Task<IActionResult> GetUserById(int userId)
   {
-    var model = _userService.GetUserById(userId);
+    var model = await _userService.GetUserById(userId);
 
     if (model == null)
     {
@@ -65,7 +65,7 @@ public class UsersController : ControllerBase
   }
 
   [HttpPost]
-  public IActionResult CreateUser([FromBody] CreateUserRequestDto requestDto)
+  public async Task<IActionResult> CreateUser([FromBody] CreateUserRequestDto requestDto)
   {
     var input = new CreateUserInput
     (
@@ -74,7 +74,7 @@ public class UsersController : ControllerBase
       password: requestDto.Password
     );
 
-    var model = _userService.CreateUser(input);
+    var model = await _userService.CreateUser(input);
 
     var responseDto = new GetUserResponseDto
     (
@@ -87,9 +87,9 @@ public class UsersController : ControllerBase
   }
 
   [HttpDelete("{userId}")]
-  public IActionResult DeleteUser(int userId)
+  public async Task<IActionResult> DeleteUser(int userId)
   {
-    var output = _userService.DeleteUser(userId);
+    var output = await _userService.DeleteUser(userId);
 
     return output.Status switch
     {
@@ -99,7 +99,7 @@ public class UsersController : ControllerBase
   }
 
   [HttpPut("{userId}")]
-  public IActionResult UpdateUser(int userId, [FromBody] UpdateUserRequestDto requestDto)
+  public async Task<IActionResult> UpdateUser(int userId, [FromBody] UpdateUserRequestDto requestDto)
   {
     if (requestDto.Id != userId)
     {
@@ -112,7 +112,7 @@ public class UsersController : ControllerBase
       age: requestDto.Age
     );
 
-    var model = _userService.UpdateUser(input);
+    var model = await _userService.UpdateUser(input);
 
     if (model == null)
     {

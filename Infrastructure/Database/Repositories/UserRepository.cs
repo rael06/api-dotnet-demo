@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using MyWebAPI.Models;
 using MyWebAPI.Services.UserService;
 
@@ -12,50 +13,50 @@ public class UserRepository : IUserRepository
     _context = context;
   }
 
-  public IEnumerable<User> GetUsers(GetUsersInput input)
+  public async Task<IEnumerable<User>> GetUsers(GetUsersInput input)
   {
-    return _context.Users.Where(u =>
+    return await _context.Users.Where(u =>
       (input.MinAge == null || u.Age >= input.MinAge) &&
       (input.MaxAge == null || u.Age <= input.MaxAge)
-    );
+    ).ToListAsync();
   }
 
-  public User? GetUserById(int userId)
+  public async Task<User?> GetUserById(int userId)
   {
-    return _context.Users.FirstOrDefault(u => u.Id == userId);
+    return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
   }
 
-  public User CreateUser(CreateUserInput input)
+  public async Task<User> CreateUser(CreateUserInput input)
   {
     var passwordHash = input.Password + "_hashed";
 
     var newUser = new User(input.Username, input.Age, passwordHash);
-    _context.Users.Add(newUser);
-    _context.SaveChanges();
+    await _context.Users.AddAsync(newUser);
+    await _context.SaveChangesAsync();
 
     return newUser;
   }
 
-  public void DeleteUser(int userId)
+  public async Task DeleteUser(int userId)
   {
-    var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+    var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
     if (user == null) return;
 
     _context.Users.Remove(user);
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
   }
 
-  public User? UpdateUser(UpdateUserInput input)
+  public async Task<User?> UpdateUser(UpdateUserInput input)
   {
-    var user = GetUserById(input.Id);
+    var user = await GetUserById(input.Id);
 
     if (user == null) return null;
 
     user.Username = input.Username;
     user.Age = input.Age;
 
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return user;
   }

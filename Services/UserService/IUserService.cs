@@ -4,10 +4,10 @@ namespace MyWebAPI.Services.UserService;
 
 public interface IUserService
 {
-  ICollection<User> GetUsers(GetUsersInput input);
-  double GetAverageAge();
-  User? GetUserById(int userId);
-  User CreateUser(CreateUserInput input);
-  DeleteUserOutput DeleteUser(int userId);
-  User? UpdateUser(UpdateUserInput input);
+  Task<IEnumerable<User>> GetUsers(GetUsersInput input);
+  Task<double> GetAverageAge();
+  Task<User?> GetUserById(int userId);
+  Task<User> CreateUser(CreateUserInput input);
+  Task<DeleteUserOutput> DeleteUser(int userId);
+  Task<User?> UpdateUser(UpdateUserInput input);
 }
