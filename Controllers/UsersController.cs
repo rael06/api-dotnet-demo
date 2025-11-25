@@ -112,27 +112,19 @@ public class UsersController : ControllerBase
       age: requestDto.Age
     );
 
-    var output = _userService.UpdateUser(input);
+    var model = _userService.UpdateUser(input);
 
-    Func<IActionResult> action = output.Status switch
+    if (model == null)
     {
-      UpdateUserStatus.Success => () =>
-      {
-        if (output.UpdatedUser == null)
-        {
-          return StatusCode(StatusCodes.Status500InternalServerError, "Updated user is null");
-        }
-        var dto = new GetUserResponseDto(
-          id: output.UpdatedUser.Id,
-          username: output.UpdatedUser.Username,
-          age: output.UpdatedUser.Age
-        );
-        return Ok(dto);
-      }
-      ,
-      UpdateUserStatus.NotFound => () => NotFound($"User with id {userId} not found"),
-    };
+      return NotFound($"User with id {userId} not found");
+    }
 
-    return action();
+    var dto = new GetUserResponseDto(
+      id: model.Id,
+      username: model.Username,
+      age: model.Age
+    );
+
+    return Ok(dto);
   }
 }

@@ -9,5 +9,5 @@ public interface IUserService
   User? GetUserById(int userId);
   User CreateUser(CreateUserInput input);
   DeleteUserOutput DeleteUser(int userId);
-  UpdateUserOutput UpdateUser(UpdateUserInput input);
+  User? UpdateUser(UpdateUserInput input);
 }
