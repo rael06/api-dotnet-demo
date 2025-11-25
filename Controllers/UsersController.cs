@@ -86,4 +86,16 @@ public class UsersController : ControllerBase
 
     return CreatedAtAction(nameof(GetUserById), new { userId = model.Id }, responseDto);
   }
+
+  [HttpDelete("{userId}")]
+  public IActionResult DeleteUser(int userId)
+  {
+    var output = _userService.DeleteUser(userId);
+
+    return output.Status switch
+    {
+      DeleteUserStatus.Success => NoContent(),
+      DeleteUserStatus.NotFound => NotFound($"User with id {userId} not found"),
+    };
+  }
 }

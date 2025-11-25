@@ -8,4 +8,5 @@ public interface IUserService
   double GetAverageAge();
   User? GetUserById(int userId);
   User CreateUser(CreateUserInput input);
+  DeleteUserOutput DeleteUser(int userId);
 }

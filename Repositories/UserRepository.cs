@@ -6,7 +6,7 @@ namespace MyWebAPI.Repositories;
 
 public class UserRepository : IUserRepository
 {
-  private static IEnumerable<User> users =
+  private static List<User> users =
   [
     new User(1, "Alice", 30, "hash1"),
     new User(2, "Bob", 25, "hash2"),
@@ -32,7 +32,14 @@ public class UserRepository : IUserRepository
     var passwordHash = input.Password + "_hashed";
 
     var newUser = new User(newId, input.Username, input.Age, passwordHash);
-    users = users.Append(newUser);
+    users.Add(newUser);
     return newUser;
+  }
+
+  public void DeleteUser(int userId)
+  {
+    var user = users.FirstOrDefault(u => u.Id == userId);
+    if (user == null) return;
+    users.Remove(user);
   }
 }

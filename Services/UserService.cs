@@ -38,4 +38,15 @@ public class UserService : IUserService
     var user = _userRepository.CreateUser(input);
     return user;
   }
+
+  public DeleteUserOutput DeleteUser(int userId)
+  {
+    var user = _userRepository.GetUserById(userId);
+    if (user == null)
+    {
+      return new DeleteUserOutput { Status = DeleteUserStatus.NotFound };
+    }
+    _userRepository.DeleteUser(userId);
+    return new DeleteUserOutput { Status = DeleteUserStatus.Success };
+  }
 }

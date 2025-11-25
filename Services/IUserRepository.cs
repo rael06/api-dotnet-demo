@@ -7,4 +7,5 @@ public interface IUserRepository
   IEnumerable<User> GetUsers(GetUsersInput input);
   User? GetUserById(int userId);
   User CreateUser(CreateUserInput input);
+  void DeleteUser(int userId);
 }
