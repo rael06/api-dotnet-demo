@@ -1,6 +1,5 @@
-using System.Collections;
 using MyWebAPI.Models;
-using MyWebAPI.Services;
+using MyWebAPI.Services.UserService;
 
 namespace MyWebAPI.Repositories;
 
@@ -41,5 +40,16 @@ public class UserRepository : IUserRepository
     var user = users.FirstOrDefault(u => u.Id == userId);
     if (user == null) return;
     users.Remove(user);
+  }
+
+  public User? PutUser(PutUserInput input)
+  {
+    var user = users.FirstOrDefault(u => u.Id == input.Id);
+    if (user == null) return null;
+
+    user.Username = input.Username;
+    user.Age = input.Age;
+
+    return user;
   }
 }

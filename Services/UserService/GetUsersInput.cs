@@ -1,4 +1,4 @@
-namespace MyWebAPI.Models;
+namespace MyWebAPI.Services.UserService;
 
 public class GetUsersInput
 {

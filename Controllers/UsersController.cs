@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MyWebAPI.DTO;
-using MyWebAPI.Models;
-using MyWebAPI.Services;
+using MyWebAPI.Services.UserService;
 
 namespace MyWebAPI.Controllers;
 
@@ -97,5 +96,43 @@ public class UsersController : ControllerBase
       DeleteUserStatus.Success => NoContent(),
       DeleteUserStatus.NotFound => NotFound($"User with id {userId} not found"),
     };
+  }
+
+  [HttpPut("{userId}")]
+  public IActionResult UpdateUser(int userId, [FromBody] PutUserRequestDto requestDto)
+  {
+    if (requestDto.Id != userId)
+    {
+      return BadRequest($"Id: {requestDto.Id} in the request body does not match the id: {userId} in the URL");
+    }
+
+    var input = new PutUserInput(
+      id: requestDto.Id,
+      username: requestDto.Username,
+      age: requestDto.Age
+    );
+
+    var output = _userService.PutUser(input);
+
+    Func<IActionResult> action = output.Status switch
+    {
+      PutUserStatus.Success => () =>
+      {
+        if (output.UpdatedUser == null)
+        {
+          return StatusCode(StatusCodes.Status500InternalServerError, "Updated user is null");
+        }
+        var dto = new GetUserResponseDto(
+          id: output.UpdatedUser.Id,
+          username: output.UpdatedUser.Username,
+          age: output.UpdatedUser.Age
+        );
+        return Ok(dto);
+      }
+      ,
+      PutUserStatus.NotFound => () => NotFound($"User with id {userId} not found"),
+    };
+
+    return action();
   }
 }

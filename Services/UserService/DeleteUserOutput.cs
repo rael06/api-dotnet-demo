@@ -1,4 +1,4 @@
-namespace MyWebAPI.Services;
+namespace MyWebAPI.Services.UserService;
 
 public enum DeleteUserStatus
 {

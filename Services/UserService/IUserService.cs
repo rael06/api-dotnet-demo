@@ -1,6 +1,6 @@
 using MyWebAPI.Models;
 
-namespace MyWebAPI.Services;
+namespace MyWebAPI.Services.UserService;
 
 public interface IUserService
 {
@@ -9,4 +9,5 @@ public interface IUserService
   User? GetUserById(int userId);
   User CreateUser(CreateUserInput input);
   DeleteUserOutput DeleteUser(int userId);
+  PutUserOutput PutUser(PutUserInput input);
 }

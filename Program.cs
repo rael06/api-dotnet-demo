@@ -1,5 +1,5 @@
 using MyWebAPI.Repositories;
-using MyWebAPI.Services;
+using MyWebAPI.Services.UserService;
 
 namespace MyWebAPI;
 

@@ -1,6 +1,6 @@
 using MyWebAPI.Models;
-using MyWebAPI.Services;
 
+namespace MyWebAPI.Services.UserService;
 public class UserService : IUserService
 {
   private readonly IUserRepository _userRepository;
@@ -48,5 +48,16 @@ public class UserService : IUserService
     }
     _userRepository.DeleteUser(userId);
     return new DeleteUserOutput { Status = DeleteUserStatus.Success };
+  }
+
+  public PutUserOutput PutUser(PutUserInput input)
+  {
+    var updatedUser = _userRepository.PutUser(input);
+    if (updatedUser == null)
+    {
+      return new PutUserOutput(status: PutUserStatus.NotFound, updatedUser: null);
+    }
+
+    return new PutUserOutput(status: PutUserStatus.Success, updatedUser: updatedUser);
   }
 }
