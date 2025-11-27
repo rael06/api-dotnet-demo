@@ -30,4 +30,21 @@ public class TodoService : ITodoService
   {
     return await _todoRepository.GetTodos();
   }
+
+  public async Task<Todo?> UpdateTodo(Todo input)
+  {
+    var todoToUpdate = await _todoRepository.GetTodoById(input.Id);
+    if (todoToUpdate == null)
+    {
+      return null;
+    }
+    todoToUpdate.Title = input.Title;
+    todoToUpdate.Description = input.Description;
+    todoToUpdate.DueDate = input.DueDate;
+    todoToUpdate.IsDone = input.IsDone;
+    todoToUpdate.UpdateDate = DateTime.UtcNow;
+    var updatedTodo = await _todoRepository.UpdateTodo(todoToUpdate);
+
+    return updatedTodo;
+  }
 }

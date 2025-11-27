@@ -23,4 +23,26 @@ public class TodoRepository : ITodoRepository
   {
     return await _context.Todos.ToListAsync();
   }
+
+  public async Task<Todo?> GetTodoById(int id)
+  {
+    return await _context.Todos.FindAsync(id);
+  }
+
+  public async Task<Todo?> UpdateTodo(Todo input)
+  {
+    var todo = await GetTodoById(input.Id);
+    if (todo == null)
+    {
+      return null;
+    }
+    todo.Title = input.Title;
+    todo.Description = input.Description;
+    todo.UpdateDate = input.UpdateDate;
+    todo.DueDate = input.DueDate;
+    todo.IsDone = input.IsDone;
+    await _context.SaveChangesAsync();
+
+    return todo;
+  }
 }

@@ -57,4 +57,43 @@ public class TodosController : ControllerBase
 
     return Ok(dto);
   }
+
+  [HttpPut("{todoId}")]
+  public async Task<IActionResult> UpdateTodo(int todoId, [FromBody] UpdateTodoRequestDto requestDto)
+  {
+    if (todoId != requestDto.Id)
+    {
+      return BadRequest("The todo ID in the URL does not match the ID in the request body.");
+    }
+
+    var input = new Todo
+    {
+      Id = requestDto.Id,
+      Title = requestDto.Title,
+      Description = requestDto.Description,
+      DueDate = requestDto.DueDate,
+      CreationDate = requestDto.CreationDate,
+      UpdateDate = requestDto.UpdateDate,
+      IsDone = requestDto.IsDone
+    };
+
+    var model = await _todoService.UpdateTodo(input);
+    if (model == null)
+    {
+      return NotFound();
+    }
+
+    var dto = new GetTodoResponseDto
+    {
+      Id = model.Id,
+      Title = model.Title,
+      Description = model.Description,
+      CreationDate = model.CreationDate,
+      UpdateDate = model.UpdateDate,
+      DueDate = model.DueDate,
+      IsDone = model.IsDone
+    };
+
+    return Ok(dto);
+  }
 }

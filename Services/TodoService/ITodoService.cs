@@ -6,4 +6,5 @@ public interface ITodoService
 {
   Task<Todo> CreateTodo(CreateTodoInput input);
   Task<ICollection<Todo>> GetTodos();
+  Task<Todo?> UpdateTodo(Todo input);
 }
