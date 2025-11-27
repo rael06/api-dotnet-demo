@@ -10,4 +10,6 @@ public class CreateTodoRequestDto
   public string? Description { get; set; }
   [Required]
   public required DateTime DueDate { get; set; }
+  [Required]
+  public required int UserId { get; set; }
 }

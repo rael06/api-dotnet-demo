@@ -28,5 +28,11 @@ public class AppDbContext : DbContext
     modelBuilder.Entity<Todo>().Property(t => t.UpdateDate).IsRequired(false);
     modelBuilder.Entity<Todo>().Property(t => t.DueDate).IsRequired();
     modelBuilder.Entity<Todo>().Property(t => t.IsDone).IsRequired();
+    modelBuilder.Entity<Todo>()
+      .HasOne(t => t.User)
+      .WithMany(u => u.Todos)
+      .HasForeignKey(t => t.UserId)
+      .IsRequired()
+      .OnDelete(DeleteBehavior.Cascade);
   }
 }

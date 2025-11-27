@@ -20,9 +20,10 @@ public class TodosController : ControllerBase
   public async Task<IActionResult> CreateTodo([FromBody] CreateTodoRequestDto requestDto)
   {
     var input = new CreateTodoInput(
-      requestDto.Title,
-      requestDto.Description,
-      requestDto.DueDate
+      title: requestDto.Title,
+      description: requestDto.Description,
+      dueDate: requestDto.DueDate,
+      userId: requestDto.UserId
     );
 
     var model = await _todoService.CreateTodo(input);
@@ -35,7 +36,8 @@ public class TodosController : ControllerBase
       CreationDate = model.CreationDate,
       UpdateDate = model.UpdateDate,
       DueDate = model.DueDate,
-      IsDone = model.IsDone
+      IsDone = model.IsDone,
+      UserId = model.UserId
     };
 
     return CreatedAtAction(null, new { id = model.Id }, responseDto);
@@ -52,7 +54,8 @@ public class TodosController : ControllerBase
       CreationDate = t.CreationDate,
       UpdateDate = t.UpdateDate,
       DueDate = t.DueDate,
-      IsDone = t.IsDone
+      IsDone = t.IsDone,
+      UserId = t.UserId
     });
 
     return Ok(dto);
@@ -74,7 +77,8 @@ public class TodosController : ControllerBase
       DueDate = requestDto.DueDate,
       CreationDate = requestDto.CreationDate,
       UpdateDate = requestDto.UpdateDate,
-      IsDone = requestDto.IsDone
+      IsDone = requestDto.IsDone,
+      UserId = requestDto.UserId
     };
 
     var model = await _todoService.UpdateTodo(input);
@@ -91,7 +95,8 @@ public class TodosController : ControllerBase
       CreationDate = model.CreationDate,
       UpdateDate = model.UpdateDate,
       DueDate = model.DueDate,
-      IsDone = model.IsDone
+      IsDone = model.IsDone,
+      UserId = model.UserId
     };
 
     return Ok(dto);
@@ -114,7 +119,8 @@ public class TodosController : ControllerBase
       CreationDate = model.CreationDate,
       UpdateDate = model.UpdateDate,
       DueDate = model.DueDate,
-      IsDone = model.IsDone
+      IsDone = model.IsDone,
+      UserId = model.UserId
     };
 
     return Ok(dto);

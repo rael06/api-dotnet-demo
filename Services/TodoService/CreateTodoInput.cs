@@ -5,11 +5,13 @@ public class CreateTodoInput
   public string Title { get; set; }
   public string? Description { get; set; }
   public DateTime DueDate { get; set; }
+  public int UserId { get; set; }
 
-  public CreateTodoInput(string title, string? description, DateTime dueDate)
+  public CreateTodoInput(string title, string? description, DateTime dueDate, int userId)
   {
     Title = title;
     Description = description;
     DueDate = dueDate;
+    UserId = userId;
   }
 }

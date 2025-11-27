@@ -6,6 +6,7 @@ public class User
   public string Username { get; set; }
   public int Age { get; set; }
   public string PasswordHash { get; set; }
+  public virtual ICollection<Todo> Todos { get; set; } = new List<Todo>();
 
   public User(string username, int age, string passwordHash)
   {

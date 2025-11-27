@@ -9,4 +9,5 @@ public class UpdateTodoRequestDto
   public required DateTime? UpdateDate { get; set; }
   public required DateTime DueDate { get; set; }
   public required bool IsDone { get; set; }
+  public required int UserId { get; set; }
 }

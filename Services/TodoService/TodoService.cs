@@ -18,7 +18,8 @@ public class TodoService : ITodoService
       Description = input.Description,
       CreationDate = DateTime.UtcNow,
       DueDate = input.DueDate,
-      IsDone = false
+      IsDone = false,
+      UserId = input.UserId
     };
 
     var createdTodo = await _todoRepository.CreateTodo(todo);

@@ -9,4 +9,6 @@ public class Todo
   public DateTime? UpdateDate { get; set; }
   public DateTime DueDate { get; set; }
   public bool IsDone { get; set; }
+  public required int UserId { get; set; }
+  public virtual User? User { get; set; }
 }
