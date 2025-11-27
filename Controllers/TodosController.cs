@@ -96,4 +96,39 @@ public class TodosController : ControllerBase
 
     return Ok(dto);
   }
+
+  [HttpGet("{todoId}")]
+  public async Task<IActionResult> GetTodoById(int todoId)
+  {
+    var model = await _todoService.GetTodoById(todoId);
+    if (model == null)
+    {
+      return NotFound();
+    }
+
+    var dto = new GetTodoResponseDto
+    {
+      Id = model.Id,
+      Title = model.Title,
+      Description = model.Description,
+      CreationDate = model.CreationDate,
+      UpdateDate = model.UpdateDate,
+      DueDate = model.DueDate,
+      IsDone = model.IsDone
+    };
+
+    return Ok(dto);
+  }
+
+  [HttpDelete("{todoId}")]
+  public async Task<IActionResult> DeleteTodo(int todoId)
+  {
+    var isSuccess = await _todoService.DeleteTodo(todoId);
+    if (!isSuccess)
+    {
+      return NotFound();
+    }
+
+    return NoContent();
+  }
 }

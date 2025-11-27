@@ -1,4 +1,3 @@
-using MyWebAPI.Infrastructure.Database.Repositories;
 using MyWebAPI.Models;
 
 namespace MyWebAPI.Services.TodoService;
@@ -46,5 +45,16 @@ public class TodoService : ITodoService
     var updatedTodo = await _todoRepository.UpdateTodo(todoToUpdate);
 
     return updatedTodo;
+  }
+
+  public async Task<Todo?> GetTodoById(int id)
+  {
+    return await _todoRepository.GetTodoById(id);
+  }
+
+  public async Task<bool> DeleteTodo(int id)
+  {
+    var isSuccess = await _todoRepository.DeleteTodo(id);
+    return isSuccess;
   }
 }

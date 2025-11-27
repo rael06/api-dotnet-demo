@@ -8,4 +8,5 @@ public interface ITodoRepository
   Task<ICollection<Todo>> GetTodos();
   Task<Todo?> GetTodoById(int id);
   Task<Todo?> UpdateTodo(Todo todo);
+  Task<bool> DeleteTodo(int id);
 }
