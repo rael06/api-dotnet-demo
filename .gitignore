@@ -41,4 +41,4 @@ msbuild.wrn
 *.private.*
 
 # Database
-*.db
+*.db*

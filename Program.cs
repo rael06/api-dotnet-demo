@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyWebAPI.Infrastructure.Database;
 using MyWebAPI.Infrastructure.Database.Repositories;
+using MyWebAPI.Services.TodoService;
 using MyWebAPI.Services.UserService;
 
 namespace MyWebAPI;
@@ -23,6 +24,9 @@ public class Program
 
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IUserService, UserService>();
+
+    builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+    builder.Services.AddScoped<ITodoService, TodoService>();
 
     var app = builder.Build();
 
